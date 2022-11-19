@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <omp.h>
 
+#define S   30
 #define N   10
 #define NB_THREADS_MIN  4
 #define NB_THREADS_MAX  16
@@ -90,17 +91,17 @@ long fiboPar2(int n){
   if ( n < 2 )
     return(n);
   else {
-      #pragma omp task shared(fnm1)
-      {
-        if (n<30)
-          fnm1 = fibo(n-1);
-        else
+      if (n<S)
+          return fiboPar2(n-1)+fiboPar2(n-2);
+      else {
+        #pragma omp task shared(fnm1)
+        {
           fnm1 = fiboPar2(n-1);
-        num_tasks++;
-      }
+          num_tasks++;
+        }
       #pragma omp task shared(fnm2)
       {
-        if (n<30)
+        if (n<S)
           fnm2 = fibo(n-2);
         else 
           fnm2 = fiboPar2(n-2);
@@ -108,6 +109,7 @@ long fiboPar2(int n){
       }
       #pragma omp taskwait
       return(fnm1 + fnm2);
+    }
   }
 }
 
@@ -131,7 +133,7 @@ long fiboPar3(int n, int x){
       return(fnm1 + fnm2);
     }
     else {
-      return fibo(n-1);
+      return fiboPar3(n-2, 0)+fiboPar3(n-1, 0);
     }     
   } 
 }
