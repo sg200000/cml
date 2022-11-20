@@ -2,8 +2,8 @@
 #include <stdlib.h>
 #include <omp.h>
 
-#define NB_THREADS 4
-#define X 4
+#define NB_THREADS 4 
+#define X 7
 
 long num_tasks = 0;
 
@@ -70,7 +70,7 @@ long fiboPar3(int n, int x){
   if ( n < 2 )
     return(n);
   else {
-    if (x>0){
+    if (x>1){
       #pragma omp task shared(fnm1)
       {
         fnm1 = fiboPar3(n-1,x-1);
@@ -85,7 +85,7 @@ long fiboPar3(int n, int x){
       return(fnm1 + fnm2);
     }
     else {
-      return fibo(n-1);
+      return fiboPar3(n-1, -1)+fiboPar3(n-2, -1);
     }     
   } 
 }
@@ -96,8 +96,17 @@ int main(void)
   long resultSeq, resultPar, resultPar2;
 
   double start, end, timeSeq, timePar, timePar2, acceleration, efficacite;
-  n = 40;
-
+  n = 40; 
+  do {
+	n++;
+	start=omp_get_wtime();
+  	resultSeq = fibo(n);
+ 	end=omp_get_wtime();
+  	timeSeq=(end-start);
+	printf("%g\n",timeSeq);
+  }
+  while (timeSeq<30.0);
+  printf("%d\n", n);
   start=omp_get_wtime();
   resultSeq = fibo(n);
   end=omp_get_wtime();
