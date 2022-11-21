@@ -3,7 +3,7 @@
 #include <omp.h>
 
 #define NB_THREADS 4 
-#define N 48
+#define N 40
 #define X 5
 
 long num_tasks = 0;
