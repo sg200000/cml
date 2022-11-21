@@ -55,7 +55,7 @@ int main(void)
   /* End fiboPar2 */
 
   /* begin seuil test */
-  for (int i=S; i<5; i++){
+  for (int i=0; i<5; i++){
         s += 5;
         start=omp_get_wtime();
         #pragma omp parallel num_threads(NB_THREADS)
