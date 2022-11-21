@@ -71,11 +71,7 @@ int main(void)
         acceleration = timeSeq/timePar;
         efficacite = acceleration/NB_THREADS;
         printf("s = %d\n", s);
-        printf("Version sequentiel : fibonacci(%d) = %ld\n", n, resultSeq);
-        printf("Version parallèle  : fibonacci(%d) = %ld\n\n", n, resultPar);
-        printf ("temps d'execution par : %g \n",timePar);
         printf("nombre de taches : %ld\n\n", num_tasks);
-
         printf("Accélération %g\n", acceleration);
         printf("Efficacité : %g\n\n",efficacite);
     }
