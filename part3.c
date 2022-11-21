@@ -4,7 +4,7 @@
 
 #define NB_THREADS 4 
 #define N 48
-#define S 30
+#define S 15
 
 long num_tasks = 0;
 
@@ -44,14 +44,14 @@ int main(void)
   timePar=(end-start);
   acceleration = timeSeq/timePar;
   efficacite = acceleration/NB_THREADS;
-
-  printf("Version sequentiel : finonacci(%d) = %ld\n", n, resultSeq);
-  printf("Version parallèle  : finonacci(%d) = %ld\n", n, resultPar);
-  printf ("temps d'execution par : %g \n",timePar);
-  printf("nombre de taches : %ld\n", num_tasks);
+  printf("s = %d\n", s);
+  printf("Version sequentiel : fibonacci(%d) = %ld\n", n, resultSeq);
+  printf("Version parallèle  : fibonacci(%d) = %ld\n\n", n, resultPar);
+  printf ("temps d'execution parallèle : %g \n",timePar);
+  printf("nombre de taches : %ld\n\n", num_tasks);
 
   printf("Accélération %g\n", acceleration);
-  printf("Efficacité : %g\n",efficacite);
+  printf("Efficacité : %g\n\n",efficacite);
   /* End fiboPar2 */
 
   /* begin seuil test */
@@ -70,14 +70,14 @@ int main(void)
         timePar=(end-start);
         acceleration = timeSeq/timePar;
         efficacite = acceleration/NB_THREADS;
-
-        printf("Version sequentiel : finonacci(%d) = %ld\n", n, resultSeq);
-        printf("Version parallèle  : finonacci(%d) = %ld\n", n, resultPar);
+        printf("s = %d\n", s);
+        printf("Version sequentiel : fibonacci(%d) = %ld\n", n, resultSeq);
+        printf("Version parallèle  : fibonacci(%d) = %ld\n\n", n, resultPar);
         printf ("temps d'execution par : %g \n",timePar);
-        printf("nombre de taches : %ld\n", num_tasks);
+        printf("nombre de taches : %ld\n\n", num_tasks);
 
         printf("Accélération %g\n", acceleration);
-        printf("Efficacité : %g\n",efficacite);
+        printf("Efficacité : %g\n\n",efficacite);
     }
     /* End seuil test */
 
