@@ -3,11 +3,11 @@
 #include <omp.h>
 
 #define S   30
-#define N   30
+#define N   48
 #define NB_THREADS_MIN 2 
 #define NB_THREADS_MAX 8 
-#define x_min   3
-#define x_max   16
+#define x_min   1
+#define x_max   20
 
 long num_tasks = 0;
 
