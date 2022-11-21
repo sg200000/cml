@@ -25,9 +25,6 @@ int main(void)
   resultSeq = fibo(n);
   end=omp_get_wtime();
   timeSeq=(end-start);
-
-  printf("Version seq : fibonacci(%d) = %ld\n", n, resultSeq);
-  printf ("temps d'execution seq : %g \n",timeSeq);
   /* End sequential */
 
   /* Begin fiboPar2 */
@@ -71,7 +68,7 @@ int main(void)
         acceleration = timeSeq/timePar;
         efficacite = acceleration/NB_THREADS;
         printf("s = %d\n", s);
-        printf("nombre de taches : %ld\n\n", num_tasks);
+        printf("nombre de taches : %ld\n", num_tasks);
         printf("Accélération %g\n", acceleration);
         printf("Efficacité : %g\n\n",efficacite);
     }
