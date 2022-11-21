@@ -3,14 +3,11 @@
 #include <omp.h>
 
 #define S   30
-#define N   30 
-#define NB_THREADS_MIN 1 
-#define NB_THREADS_MAX 4 
+#define N   30
+#define NB_THREADS_MIN 2 
+#define NB_THREADS_MAX 8 
 #define x_min   3
-#define x_max   10
-
-double accel[NB_THREADS_MAX][x_max];
-double eff[NB_THREADS_MAX][x_max];
+#define x_max   16
 
 long num_tasks = 0;
 
@@ -20,48 +17,46 @@ long fiboPar2(int);
 long fiboPar3(int, int);
 
 int main(){
-    int n;
-    long resultSeq, resultPar, resultPar2, resultPar3;
-    double start, end, timeSeq, timePar, timePar2, timePar3, acceleration, efficacite;
+    int n = N;
+    long resultSeq, resultPar;
+    double start, end, timeSeq,timePar, acceleration;
+
+    start=omp_get_wtime();
+    resultSeq = fibo(n);
+    end=omp_get_wtime();
+    timeSeq=(end-start);
+
     FILE * effFile = fopen("traceEff.dat", "w");
     FILE * accelFile = fopen("traceAccel.dat", "w");
+
     fprintf(effFile, "%d\t", (x_max-x_min)+1);
     fprintf(accelFile, "%d\t", (x_max-x_min)+1);
     for (int i=x_min;i<=x_max;i++){
-	fprintf(effFile, "%d\t", i);
-	fprintf(accelFile, "%d\t", i);
+	    fprintf(effFile, "%d\t", i);
+	    fprintf(accelFile, "%d\t", i);
     }
     fprintf(effFile, "\n");
     fprintf(accelFile, "\n");
-    n = N;
     for (int th=NB_THREADS_MIN;th<=NB_THREADS_MAX;th++){
-	fprintf(effFile, "%d\t", th);
-	fprintf(accelFile, "%d\t", th);
-        for(int x=x_min;x<=x_max;x++){
-            start=omp_get_wtime();
-            resultSeq = fibo(n);
-            end=omp_get_wtime();
-            timeSeq=(end-start);
-
+	    fprintf(effFile, "%d\t", th);
+	    fprintf(accelFile, "%d\t", th);
+      for(int x=x_min;x<=x_max;x++){
             start=omp_get_wtime();
             #pragma omp parallel num_threads(th)
             {
                 #pragma omp single
                 {
-                    resultPar3 = fiboPar3(n, x);
+                    resultPar = fiboPar3(n, x);
                 }
             }
             end=omp_get_wtime();
-            timePar3=(end-start);
-            accel[th][x] = timeSeq/timePar3;
-            eff[th][x] = accel[th][x]/th;
-	    fprintf(effFile, "%g\t", accel[th][x]);
-	    fprintf(accelFile, "%g\t", eff[th][x]);
-            //printf("accel[%d][%d] = %lf\n", th, x, accel[th][x]);
-            //printf("eff[%d][%d] = %lf\n", th, x, eff[th][x]);
-        }
-	fprintf(effFile, "\n");
-	fprintf(accelFile, "\n");
+            timePar=(end-start);
+            acceleration = timeSeq/timePar;
+	          fprintf(effFile, "%g\t", acceleration/th);
+	          fprintf(accelFile, "%g\t", acceleration);
+      }
+	    fprintf(effFile, "\n");
+	    fprintf(accelFile, "\n");
     }
     fclose(effFile);
     fclose(accelFile);

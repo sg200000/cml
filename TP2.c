@@ -97,7 +97,7 @@ int main(void)
 
   double start, end, timeSeq, timePar, timePar2, acceleration, efficacite;
   n = 40; 
-  do {
+/*  do {
 	n++;
 	start=omp_get_wtime();
   	resultSeq = fibo(n);
@@ -106,7 +106,7 @@ int main(void)
 	printf("%g\n",timeSeq);
   }
   while (timeSeq<30.0);
-  printf("%d\n", n);
+  printf("%d\n", n);*/
   start=omp_get_wtime();
   resultSeq = fibo(n);
   end=omp_get_wtime();
