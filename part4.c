@@ -58,7 +58,7 @@ int main(void)
         {
             #pragma omp single
             {
-                resultPar = fiboPar2(n,x);
+                resultPar = fiboPar3(n,x);
             }
         }
 
